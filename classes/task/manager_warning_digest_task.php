@@ -89,6 +89,16 @@ class manager_warning_digest_task extends \core\task\scheduled_task {
                                                   AND managertype != 0
                                                   $companysql", array('companyid' => $company->id));
 
+                // We only want to report on the users - no educators.
+                $educatorsql = "";
+                $educatoruserids = get_records_sql("SELECT DISTINCT userid FROM {company_users}
+                                                 WHERE educator = 1
+                                                 AND companyid = :companyid",
+                                                ['companyid' => $company->id]);
+                if (!empty($educatoruserids)) {
+                    $educatorsql = " AND lit.userid NOT IN (" . implode(',', array_keys($educatoruserids)) . ")";
+                }
+
                 // Process each one.
                 foreach ($managers as $manager) {
                     // Deparment managers dont get reports on company manager users.
@@ -119,6 +129,12 @@ class manager_warning_digest_task extends \core\task\scheduled_task {
                             $departmentids .= $departmentuser->userid;
                         }
                     }
+                    // Some sanitising.
+                    if (!empty($departmentusers)) {
+                        $departmentusersql = " AND lit.userid IN (" . $departmentids .")";
+                    } else {
+                        $departmentusersql = " AND 1 = 2 ";
+                    }
 
                     $manageruserssql = "SELECT lit.*, c.name AS companyname, ic.notifyperiod, u.firstname,u.lastname,u.username,u.email,u.lang,ic.warncompletion * 86400 AS warningtime
                                         FROM {local_iomad_track} lit
@@ -133,7 +149,8 @@ class manager_warning_digest_task extends \core\task\scheduled_task {
                                         AND lit.companyid = :companyid
                                         AND lit.timecompleted IS NULL
                                         $warnsql
-                                        AND lit.userid IN (" . $departmentids . ")
+                                        $educatorsql
+                                        $departmentusersql
                                         AND lit.timeenrolled < :runtime - (ic.warncompletion * 86400)";
 
                     $managerusers = $DB->get_records_sql($manageruserssql, ['companyid' => $company->id, 'runtime' => $runtime]);
