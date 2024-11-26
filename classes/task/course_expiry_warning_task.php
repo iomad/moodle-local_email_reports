@@ -368,7 +368,7 @@ class course_expiry_warning_task extends \core\task\scheduled_task {
 
             //  Cycle through any found users.
             foreach ($userlist as $founduser) {
-                if (!$DB->get_record('local_iomad_track', array('userid' => $founduser->userid, 'courseid' => $founduser->courseid, 'timecompleted' => null))) {
+                if (!$DB->get_records('local_iomad_track', array('userid' => $founduser->userid, 'courseid' => $founduser->courseid, 'timecompleted' => null))) {
                     // Expire the user from the course.
                     mtrace("expiring user $founduser->userid from course $founduser->courseid");
                     $event = \block_iomad_company_admin\event\user_course_expired::create(array('context' => context_course::instance($founduser->courseid),
