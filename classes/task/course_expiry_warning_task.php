@@ -264,6 +264,7 @@ class course_expiry_warning_task extends \core\task\scheduled_task {
                                                                                             'companyid' => $company->id,
                                                                                             'userid' => $user->id));
                 $event->trigger();
+                $compuser->coursecleared = true;
 
                 // Get the company template info.
                 // Check against per company template repeat instead.
