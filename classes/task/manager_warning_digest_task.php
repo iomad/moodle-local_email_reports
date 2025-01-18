@@ -172,8 +172,8 @@ class manager_warning_digest_task extends \core\task\scheduled_task {
                             continue;
                         }
 
-                        $startdate = date($CFG->iomad_date_format, $manageruser->timeenrolled) . "\n";
-                        $duedatedate = date($CFG->iomad_date_format, $manageruser->timeenrolled + $manageruser->warningtime) . "\n";
+                        $startdate = userdate($manageruser->timeenrolled, $CFG->iomad_date_format) . "\n";
+                        $duedatedate = userdate($manageruser->timeenrolled + $manageruser->warningtime, $CFG->iomad_date_format) . "\n";
                         $foundusers = true;
 
                         // Get the user's departments.

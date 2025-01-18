@@ -329,7 +329,7 @@ class course_not_completed_task extends \core\task\scheduled_task {
                                         "<td>" . $manageruser->lastname . "</td>" .
                                         "<td>" . $manageruser->email . "</td>" .
                                         "<td>" . $manageruser->coursename . "</td>" .
-                                        "<td>" . date($CFG->iomad_date_format, $manageruser->timeenrolled) . "</td></tr>";
+                                        "<td>" . userdate($manageruser->timeenrolled, $CFG->iomad_date_format) . "</td></tr>";
                         }
                         $summary .= "</table>";
                         if ($foundusers && $user = $DB->get_record('user', array('id' => $manager->userid))) {
