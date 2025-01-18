@@ -148,7 +148,7 @@ class manager_completion_digest_task extends \core\task\scheduled_task {
                         continue;
                     }
 
-                    $datestring = date($CFG->iomad_date_format, $manageruser->timecompleted) . "\n";
+                    $datestring = userdate($manageruser->timecompleted, $CFG->iomad_date_format) . "\n";
                     $foundusers = true;
                     // Get the user's departments.
                     $userdepartments = $DB->get_records_sql("SELECT DISTINCT d.name
