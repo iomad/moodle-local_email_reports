@@ -179,7 +179,7 @@ class course_expiry_warning_task extends \core\task\scheduled_task {
                                 if ($manageruser->timecompleted == 0) {
                                     $datestring = get_string('never') . "\n";
                                 } else {
-                                    $datestring = date($CFG->iomad_date_format, $manageruser->timecompleted) . "\n";
+                                    $datestring = userdate($manageruser->timecompleted, $CFG->iomad_date_format) . "\n";
                                 }
 
                                 $summary .= "<tr><td>" . $manageruser->firstname . "</td>" .
