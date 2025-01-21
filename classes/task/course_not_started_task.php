@@ -80,7 +80,7 @@ class course_not_started_task extends \core\task\scheduled_task {
                         if ($companyrec = $DB->get_record('company', array('id' => $notstarteduser->companyid))) {
                             // Get the company template info.
                             // Check against per company template repeat instead.
-                            if ($templateinfo = $DB->get_record('email_template', array('companyid' => $notstarteduser->companyid, 'lang' => $userrec->lang, 'name' => 'course_not_started_warning'))) {
+                            if ($templateinfo = $DB->get_record('email_template', array('companyid' => $notstarteduser->companyid, 'name' => 'course_not_started_warning'))) {
                                 // Check if its the correct day, if not continue.
                                 if (!empty($templateinfo->repeatday) && $templateinfo->repeatday != 99 && $templateinfo->repeatday != $dayofweek - 1) {
                                     continue;

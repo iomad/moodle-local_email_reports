@@ -124,7 +124,7 @@ class course_not_completed_task extends \core\task\scheduled_task {
 
             // get the company template info.
             // Check against per company template repeat instead.
-            if ($templateinfo = $DB->get_record('email_template', array('companyid' => $compuser->companyid, 'lang' => $compuser->lang, 'name' => 'completion_warn_user'))) {
+            if ($templateinfo = $DB->get_record('email_template', array('companyid' => $compuser->companyid, 'name' => 'completion_warn_user'))) {
                 // Check if its the correct day, if not continue.
                 if (!empty($templateinfo->repeatday) && $templateinfo->repeatday != 99 && $templateinfo->repeatday != $dayofweek - 1) {
                     continue;
