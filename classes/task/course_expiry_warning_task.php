@@ -268,7 +268,7 @@ class course_expiry_warning_task extends \core\task\scheduled_task {
 
                 // Get the company template info.
                 // Check against per company template repeat instead.
-                if ($templateinfo = $DB->get_record('email_template', array('companyid' => $company->id, 'lang' => $user->lang, 'name' => 'expiry_warn_user'))) {
+                if ($templateinfo = $DB->get_record('email_template', array('companyid' => $company->id, 'name' => 'expiry_warn_user'))) {
                     // Check if its the correct day, if not continue.
                     if (!empty($templateinfo->repeatday) && $templateinfo->repeatday != 99 && $templateinfo->repeatday != $dayofweek - 1) {
                         continue;
